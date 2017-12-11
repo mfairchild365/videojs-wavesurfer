@@ -75,10 +75,10 @@ class WavesurferTech extends Html5 {
      * Get the current time
      * @return {number}
      */
-    currentTime() {
+    currentTime(setTime) {
         if (!this.playerIsUsingWavesurfer()) {
             //fall back to html5 tech functionality
-            return super.currentTime();
+            return super.currentTime(setTime);
         }
 
         if (!this.waveready) {
@@ -86,6 +86,25 @@ class WavesurferTech extends Html5 {
         }
 
         return this.activePlayer.activeWavesurferPlugin.getCurrentTime();
+    }
+
+    /**
+     * Set the current time
+     *
+     * @param time
+     * @returns {*}
+     */
+    setCurrentTime(time) {
+        if (!this.playerIsUsingWavesurfer()) {
+            //fall back to html5 tech functionality
+            return super.currentTime(time);
+        }
+
+        if (!this.waveready) {
+            return 0;
+        }
+
+        return this.activePlayer.activeWavesurferPlugin.surfer.seekTo(time/this.activePlayer.activeWavesurferPlugin.surfer.getDuration());
     }
 
     /**
